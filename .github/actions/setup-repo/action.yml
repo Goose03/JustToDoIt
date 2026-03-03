@@ -1,0 +1,19 @@
+name: 'Setup Git Repository'
+description: 'Configure Git user and authentication for commits'
+inputs:
+  token:
+    description: 'GitHub token'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Configure Git user
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      shell: bash
+
+    - name: Authenticate using token
+      run: |
+        git remote set-url origin https://x-access-token:${{ inputs.token }}@github.com/${{ github.repository }}
+      shell: bash

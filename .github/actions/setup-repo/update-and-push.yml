@@ -1,0 +1,35 @@
+name: 'Update File and Push Branch'
+description: 'Creates a new branch, modifies a file, commits, and pushes'
+inputs:
+  update_only:
+    required: false
+    default: false
+
+outputs:
+  branch:
+    description: 'Branch name'
+    value: ${{ steps.push.outputs.branch }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Update file
+      run: echo "Updated at $(date -u --rfc-3339=ns)" > gh-update.txt
+      shell: bash
+
+    - name: Commit and push
+      id: push
+      run: |
+        branch="gh/update-$(date +%s)"
+        if [ "${{ inputs.update_only }}" = "false" ]; then
+          git checkout -b "$branch"
+          git add gh-update.txt
+          git commit -m "chore: update file"
+          echo "Pushing branch: $branch"
+          git push origin "$branch"
+        else
+          echo "Skipping push as update_only is true"
+        fi
+
+        echo "branch=$branch" >> "$GITHUB_OUTPUT"
+      shell: bash
