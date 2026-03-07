@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# repo-sync
+# Pulls the repo
+
+git pull origin main
