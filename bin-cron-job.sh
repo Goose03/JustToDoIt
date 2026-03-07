@@ -18,8 +18,7 @@ source ~/.bashrc
 
 
 # Make it into a cron job
-if [[ MINS < 0 ]] || [[ MINS > 59 ]]; then
-  echo "Use a value between 0 - 59" >&2
+if [[ $MINS -lt 0 || $MINS -gt 59 ]]; then  echo "Use a value between 0 - 59" >&2
   exit 1
 fi
 
