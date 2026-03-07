@@ -1,4 +1,4 @@
-!#/dev/usr/bin/bash
+#!/usr/bin/env bash
 
 # bin-corn-job.sh
 # adds a sh file into the bin utils and makes it into a cron job 
